@@ -53,7 +53,6 @@ elif  [ $FILE == "afhq-v2-dataset" ]; then
     mkdir -p ./data
     wget -N $URL -O $ZIP_FILE
     unzip $ZIP_FILE -d ./data
-    rm $ZIP_FILE
 
 else
     echo "Available arguments are pretrained-network-celeba-hq, pretrained-network-afhq, celeba-hq-dataset, and afhq-dataset."

@@ -81,8 +81,6 @@ if __name__ == '__main__':
                         help='weight for high-pass filtering')
 
     # training arguments
-    parser.add_argument('--randcrop_prob', type=float, default=0.5,
-                        help='Probability of using random-resized cropping')
     parser.add_argument('--resume_iter', type=int, default=0,
                         help='Iterations to resume training/testing')
     parser.add_argument('--batch_size', type=int, default=8,

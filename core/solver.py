@@ -38,23 +38,7 @@ class Solver(nn.Module):
         for name, module in self.nets_ema.items():
             setattr(self, name + '_ema', module)
 
-        if args.mode == 'train':
-            self.optims = Munch()
-            for net in self.nets.keys():
-                if net == 'fan':
-                    continue
-                self.optims[net] = torch.optim.Adam(
-                    params=self.nets[net].parameters(),
-                    lr=args.f_lr if net == 'mapping_network' else args.lr,
-                    betas=[args.beta1, args.beta2],
-                    weight_decay=args.weight_decay)
-
-            self.ckptios = [
-                CheckpointIO(ospj(args.checkpoint_dir, '{:06d}_nets.ckpt'), data_parallel=True, **self.nets),
-                CheckpointIO(ospj(args.checkpoint_dir, '{:06d}_nets_ema.ckpt'), data_parallel=True, **self.nets_ema),
-                CheckpointIO(ospj(args.checkpoint_dir, '{:06d}_optims.ckpt'), **self.optims)]
-        else:
-            self.ckptios = [CheckpointIO(ospj(args.checkpoint_dir, '{:06d}_nets_ema.ckpt'), data_parallel=True, **self.nets_ema)]
+        self.ckptios = [CheckpointIO(ospj(args.checkpoint_dir, '{:06d}_nets_ema.ckpt'), data_parallel=True, **self.nets_ema)]
 
         self.to(self.device)
         for name, network in self.named_children():

@@ -15,7 +15,6 @@ from munch import Munch
 from torch.backends import cudnn
 import torch
 
-from core.data_loader import get_train_loader
 from core.data_loader import get_test_loader
 from core.solver import Solver
 

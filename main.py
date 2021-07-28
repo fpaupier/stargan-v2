@@ -26,7 +26,6 @@ def subdirs(dname):
 
 def main(args):
     print(args)
-    cudnn.benchmark = True
     torch.manual_seed(args.seed)
 
     solver = Solver(args)

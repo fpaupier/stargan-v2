@@ -16,7 +16,7 @@ from torch.backends import cudnn
 import torch
 
 from core.data_loader import get_test_loader
-from core.solver import Solver
+from core.stargan import Stargan
 
 
 def subdirs(dname):
@@ -28,7 +28,7 @@ def main(args):
     print(args)
     torch.manual_seed(args.seed)
 
-    solver = Solver(args)
+    stargan = Stargan(args)
 
     assert len(subdirs(args.src_dir)) == args.num_domains
     assert len(subdirs(args.ref_dir)) == args.num_domains
@@ -42,7 +42,7 @@ def main(args):
                                         batch_size=args.val_batch_size,
                                         shuffle=False,
                                         num_workers=args.num_workers))
-    solver.sample(loaders)
+    stargan.sample(loaders)
 
 
 if __name__ == '__main__':

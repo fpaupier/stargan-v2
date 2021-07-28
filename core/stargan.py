@@ -24,14 +24,14 @@ from core.data_loader import InputFetcher
 import core.utils as utils
 
 
-class Solver(nn.Module):
+class Stargan(nn.Module):
     def __init__(self, args):
         super().__init__()
         self.args = args
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
         self.nets, self.nets_ema = build_model(args)
-        # below setattrs are to make networks be children of Solver, e.g., for self.to(self.device)
+        # below setattrs are to make networks be children of Stargan, e.g., for self.to(self.device)
         for name, module in self.nets.items():
             utils.print_network(module, name)
             setattr(self, name, module)
@@ -63,4 +63,7 @@ class Solver(nn.Module):
 
         fname = ospj(args.result_dir, 'reference.jpg')
         print('Working on {}...'.format(fname))
+        start = time.perf_counter()
         utils.translate_using_reference(nets_ema, args, src.x, ref.x, ref.y, fname)
+        duration = time.perf_counter() - start
+        print(f'Image generation finished. Took {duration:.2f} seconds')

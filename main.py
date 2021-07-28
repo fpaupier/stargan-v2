@@ -19,10 +19,6 @@ from core.data_loader import get_test_loader
 from core.solver import Solver
 
 
-def str2bool(v):
-    return v.lower() in ('true')
-
-
 def subdirs(dname):
     return [d for d in os.listdir(dname)
             if os.path.isdir(os.path.join(dname, d))]

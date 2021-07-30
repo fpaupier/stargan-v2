@@ -247,7 +247,7 @@ class FAN(nn.Module):
 
     @torch.no_grad()
     def get_heatmap(self, x, b_preprocess=True):
-        ''' outputs 0-1 normalized heatmap '''
+        """ outputs 0-1 normalized heatmap """
         x = F.interpolate(x, size=256, mode='bilinear')
         x_01 = x*0.5 + 0.5
         outputs, _ = self(x_01)
@@ -261,7 +261,7 @@ class FAN(nn.Module):
 
     @torch.no_grad()
     def get_landmark(self, x):
-        ''' outputs landmarks of x.shape '''
+        """ outputs landmarks of x.shape """
         heatmaps = self.get_heatmap(x, b_preprocess=False)
         landmarks = []
         for i in range(x.size(0)):

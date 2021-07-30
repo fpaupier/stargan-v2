@@ -280,11 +280,11 @@ class Discriminator(nn.Module):
         return out
 
 
-def build_model(args):
-    generator = nn.DataParallel(Generator(args.img_size, args.style_dim, w_hpf=args.w_hpf))
-    mapping_network = nn.DataParallel(MappingNetwork(args.latent_dim, args.style_dim, args.num_domains))
-    style_encoder = nn.DataParallel(StyleEncoder(args.img_size, args.style_dim, args.num_domains))
-    discriminator = nn.DataParallel(Discriminator(args.img_size, args.num_domains))
+def build_model(args: dict):
+    generator = nn.DataParallel(Generator(args['img_size'], args['style_dim'], w_hpf=args['w_hpf']))
+    mapping_network = nn.DataParallel(MappingNetwork(args['latent_dim'], args['style_dim'], args['num_domains']))
+    style_encoder = nn.DataParallel(StyleEncoder(args['img_size'], args['style_dim'], args['num_domains']))
+    discriminator = nn.DataParallel(Discriminator(args['img_size'], args['num_domains']))
     generator_ema = copy.deepcopy(generator)
     mapping_network_ema = copy.deepcopy(mapping_network)
     style_encoder_ema = copy.deepcopy(style_encoder)
@@ -297,8 +297,11 @@ def build_model(args):
                      mapping_network=mapping_network_ema,
                      style_encoder=style_encoder_ema)
 
-    if args.w_hpf > 0:
-        fan = nn.DataParallel(FAN(fname_pretrained=args.wing_path).eval())
+    if args['w_hpf'] > 0:
+        fname = None
+        if 'wing_path' in args.keys():
+            fname = args['wing_path'].eval()
+        fan = nn.DataParallel(FAN(fname_pretrained=fname))
         fan.get_heatmap = fan.module.get_heatmap
         nets.fan = fan
         nets_ema.fan = fan

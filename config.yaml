@@ -1,0 +1,30 @@
+# Model parameters
+img_size: 256  # Image resolution, in px
+num_domains: 3  # Number of domains
+latent_dim: 16  # Latent vector dimension
+hidden_dim: 512 # Hidden dimension of mapping network
+style_dim: 64  # Style code dimension
+
+# Weight for objective functions
+lambda_reg: 1  # Weight for R1 regularization
+lambda_cyc: 1  # Weight for cyclic consistency loss
+lambda_sty: 1  # Weight for style reconstruction loss
+lambda_ds: 1   # Weight for diversity sensitive loss
+ds_iter: 100000  # Number of iterations to optimize diversity sensitive loss
+w_hpf: 0.0  # Weight for high-pass filtering
+
+# Training arguments
+resume_iter: 100000  # Iterations to resume training/testing
+val_batch_size: 32  # Batch size for validation
+
+# misc
+num_workers: 4  # Number of workers used in DataLoader
+seed:  777  # Seed for random number generator
+
+# Directory for training
+checkpoint_dir: expr/checkpoints  # Directory for saving network checkpoints
+
+# Directory for testing
+result_dir: expr/results  # Directory for saving generated images and videos
+src_dir: assets/representative/afhq/src  # Directory containing input source images
+ref_dir: assets/representative/afhq/ref  # Directory containing input reference images

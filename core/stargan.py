@@ -25,7 +25,7 @@ import core.utils as utils
 
 
 class Stargan(nn.Module):
-    def __init__(self, args):
+    def __init__(self, args: dict):
         super().__init__()
         self.args = args
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -38,7 +38,7 @@ class Stargan(nn.Module):
         for name, module in self.nets_ema.items():
             setattr(self, name + '_ema', module)
 
-        self.ckptios = [CheckpointIO(ospj(args.checkpoint_dir, '{:06d}_nets_ema.ckpt'), data_parallel=True, **self.nets_ema)]
+        self.ckptios = [CheckpointIO(ospj(args['checkpoint_dir'], '{:06d}_nets_ema.ckpt'), data_parallel=True, **self.nets_ema)]
 
         self.to(self.device)
         for name, network in self.named_children():
@@ -53,17 +53,16 @@ class Stargan(nn.Module):
 
     @torch.no_grad()
     def sample(self, loaders):
-        args = self.args
         nets_ema = self.nets_ema
-        os.makedirs(args.result_dir, exist_ok=True)
-        self._load_checkpoint(args.resume_iter)
+        os.makedirs(self.args['result_dir'], exist_ok=True)
+        self._load_checkpoint(self.args['resume_iter'])
 
-        src = next(InputFetcher(loaders.src, None, args.latent_dim, 'test'))
-        ref = next(InputFetcher(loaders.ref, None, args.latent_dim, 'test'))
+        src = next(InputFetcher(loaders.src, None, self.args['latent_dim'], 'test'))
+        ref = next(InputFetcher(loaders.ref, None, self.args['latent_dim'], 'test'))
 
-        fname = ospj(args.result_dir, 'reference.jpg')
+        fname = ospj(self.args['result_dir'], 'reference.jpg')
         print('Working on {}...'.format(fname))
         start = time.perf_counter()
-        utils.translate_using_reference(nets_ema, args, src.x, ref.x, ref.y, fname)
+        utils.translate_using_reference(nets_ema, self.args, src.x, ref.x, ref.y, fname)
         duration = time.perf_counter() - start
         print(f'Image generation finished. Took {duration:.2f} seconds')

@@ -109,3 +109,5 @@ venv.bak/
 # Ignore inference results
 expr/results
 expr/checkpoints
+
+data/

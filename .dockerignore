@@ -1,0 +1,5 @@
+**/*.pyc
+README.md
+LICENSE
+assets/
+data/

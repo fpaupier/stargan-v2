@@ -21,10 +21,9 @@ pip install -r requirements.txt
 ## Datasets and pre-trained networks
 We provide a script to download datasets used in StarGAN v2 and the corresponding pre-trained networks. The datasets and network checkpoints will be downloaded and stored in the `data` and `expr/checkpoints` directories, respectively.
 
-**AFHQ.** To download the [AFHQ](https://github.com/clovaai/stargan-v2/blob/master/README.md#animal-faces-hq-dataset-afhq) dataset and the pre-trained network, run the following commands:
+**AFHQ.** To download the pre-trained network, run the following commands:
 ```bash
-bash download.sh afhq-v2-dataset
-bash download.sh pretrained-network-afhq
+bash download.sh 
 ```
 
 

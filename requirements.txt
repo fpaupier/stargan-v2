@@ -9,3 +9,4 @@ pillow==7.0.0
 scipy==1.2.1
 tqdm==4.43.0
 munch==2.5.0
+PyYAML==5.4.1

@@ -1,13 +1,7 @@
 
-## StarGAN v2 for inference
+## StarGAN v2
 
-Image synthesis in Python - a dockerized version.
-
-## Style transformation
-Style transfer on animal images.
-
-![](assets/afhq_interpolation.gif)
-
+Image synthesis in Python - a light version for inference.
 
 ## Getting started
 Clone this repository:
@@ -35,26 +29,15 @@ bash download.sh pretrained-network-afhq
 
 
 ## Generating interpolation videos
-After downloading the pre-trained networks, you can synthesize output images reflecting diverse styles (e.g., hairstyle) of reference images. The following commands will save generated images and interpolation videos to the `expr/results` directory. 
+After downloading the pre-trained networks, you can synthesize output images reflecting diverse styles of reference images.
+The following commands will save generated images and interpolation videos to the `expr/results` directory. 
 
 
-To transform a custom image, first crop the image manually so that the proportion of face occupied in the whole is similar to that of CelebA-HQ. Then, run the following command for additional fine rotation and cropping. All custom images in the `inp_dir` directory will be aligned and stored in the `out_dir` directory.
-
+**AFHQ.** To generate images, run the following command:
 ```bash
-python main.py --mode align \
-               --inp_dir assets/representative/custom/dog \
-               --out_dir assets/representative/afhq/src/dog
+python main.py 
 ```
-
-
-**AFHQ.** To generate images and interpolation videos, run the following command:
-```bash
-python main.py --num_domains 3 --resume_iter 100000 --w_hpf 0 \
-               --checkpoint_dir expr/checkpoints/afhq \
-               --result_dir expr/results/afhq \
-               --src_dir assets/representative/afhq/src \
-               --ref_dir assets/representative/afhq/ref
-```
+You can adjust the different inference options in the [`config.yaml`](./config.yaml).
 
 --------
 

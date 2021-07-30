@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+    inference:
+        build:
+          context: .
+          dockerfile: Dockerfile
+        image: popszer/starganv2:latest
+        container_name: starganV2
+        working_dir: /usr/app
+        command: python3.8 /usr/app/main.py
+        volumes:
+          - ./expr/results:/usr/app/expr/results:rw  # To write the model's generated image
+          - ./assets/:/usr/app/assets/:r  # To load the source images
+          - ./config.yaml/:/usr/app/config.yaml/:r  # To load the source images
